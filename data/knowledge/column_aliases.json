@@ -1,0 +1,78 @@
+{
+  "codigo": {
+    "high_confidence": [
+      "codigo",
+      "cod",
+      "id",
+      "numero",
+      "nro",
+      "no",
+      "codigo item",
+      "cod item"
+    ],
+    "low_confidence": [
+      "item"
+    ]
+  },
+
+  "descripcion": {
+    "high_confidence": [
+      "descripcion",
+      "descripcion del item",
+      "detalle",
+      "detalle del item",
+      "actividad",
+      "concepto",
+      "trabajo",
+      "obra"
+    ],
+    "low_confidence": [
+      "item"
+    ]
+  },
+
+  "unidad": {
+    "high_confidence": [
+      "unidad",
+      "unidad de medida",
+      "unidad medida",
+      "und",
+      "unid",
+      "u.m.",
+      "um",
+      "u"
+    ],
+    "low_confidence": []
+  },
+
+  "cantidad": {
+    "high_confidence": [
+      "cantidad",
+      "cant",
+      "cant.",
+      "cantidad total",
+      "volumen",
+      "vol",
+      "cantidad obra"
+    ],
+    "low_confidence": []
+  },
+
+  "precio_unitario": {
+    "high_confidence": [
+      "precio unitario",
+      "valor unitario",
+      "vr unitario",
+      "vr. unitario",
+      "vr_unitario",
+      "precio unit",
+      "valor unit",
+      "p.u.",
+      "pu"
+    ],
+    "low_confidence": [
+      "precio",
+      "valor"
+    ]
+  }
+}
