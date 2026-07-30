@@ -1,0 +1,45 @@
+{
+    "unidad": {
+        "high_confidence": [
+            "unidad",
+            "und",
+            "unid"
+        ],
+        "low_confidence": [
+            "u"
+        ]
+    },
+
+    "cantidad": {
+        "high_confidence": [
+            "cantidad",
+            "cant"
+        ],
+        "low_confidence": [
+            "qty"
+        ]
+    },
+
+    "precio_unitario": {
+        "high_confidence": [
+            "precio unitario",
+            "valor unitario",
+            "p.u."
+        ],
+        "low_confidence": [
+            "pu",
+            "precio"
+        ]
+    },
+
+    "codigo": {
+        "high_confidence": [
+            "codigo",
+            "cod"
+        ],
+        "low_confidence": [
+            "item",
+            "nro"
+        ]
+    }
+}
