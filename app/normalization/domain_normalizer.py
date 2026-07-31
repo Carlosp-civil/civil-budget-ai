@@ -27,6 +27,12 @@ class DomainNormalizer:
         "descripcion"
     }
 
+    _CONFIDENCE_PRIORITY = {
+        "high_confidence": 3,
+        "medium_confidence": 2,
+        "low_confidence": 1,
+    }
+
 
     def __init__(
         self,
@@ -143,7 +149,6 @@ class DomainNormalizer:
         if not value:
             return []
 
-
         normalized_value = (
             self._normalize_value(
                 value,
@@ -151,15 +156,17 @@ class DomainNormalizer:
             )
         )
 
-
         matches = self.alias_map.get(
             normalized_value,
             []
         )
 
+        best_matches = self._select_best_matches(
+            matches
+        )
 
         return self._sort_by_confidence(
-            matches
+            best_matches
         )
 
 
@@ -189,21 +196,48 @@ class DomainNormalizer:
         matches: List[NormalizationMatch]
     ) -> List[NormalizationMatch]:
         """
-        Ordena resultados:
-        primero alta confianza,
-        luego baja confianza.
+        Ordena las coincidencias desde la mayor
+        hasta la menor confianza.
         """
-
-        priority = {
-            "high_confidence": 0,
-            "low_confidence": 1
-        }
-
 
         return sorted(
             matches,
-            key=lambda match: priority.get(
+            key=lambda match: self._CONFIDENCE_PRIORITY.get(
                 match.confidence,
-                99
-            )
+                0
+            ),
+            reverse=True
         )
+
+    def _select_best_matches(
+        self,
+        matches: List[NormalizationMatch],
+    ) -> List[NormalizationMatch]:
+        """
+        Retorna únicamente la coincidencia con mayor confianza para cada
+        término canónico.
+        """
+
+        best_matches: Dict[str, NormalizationMatch] = {}
+
+        for match in matches:
+            if match.term not in best_matches:
+                best_matches[match.term] = match
+                continue
+
+            current_match = best_matches[match.term]
+
+            current_priority = self._CONFIDENCE_PRIORITY.get(
+                current_match.confidence,
+                0
+            )
+
+            new_priority = self._CONFIDENCE_PRIORITY.get(
+                match.confidence,
+                0
+            )
+
+            if new_priority > current_priority:
+                best_matches[match.term] = match
+
+        return list(best_matches.values())
