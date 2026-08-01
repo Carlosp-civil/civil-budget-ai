@@ -41,5 +41,14 @@
             "item",
             "nro"
         ]
+    },
+
+    "descripcion": {
+        "high_confidence": [
+            "descripcion",
+            "descripción",
+            "detalle",
+            "concepto"
+        ]
     }
 }
