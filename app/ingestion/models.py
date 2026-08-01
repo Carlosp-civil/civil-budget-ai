@@ -42,3 +42,19 @@ class ColumnDetectionResult:
     warnings: list[str] = field(
         default_factory=list
     )
+
+
+@dataclass
+class ColumnCandidate:
+    """
+    Representa una posible interpretación
+    de una columna del archivo.
+
+    No decide el resultado final.
+    Solo almacena una posibilidad detectada.
+    """
+
+    column_name: str
+    field: str
+    confidence: str
+    source: str
