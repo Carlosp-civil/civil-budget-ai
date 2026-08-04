@@ -1,14 +1,6 @@
 import pandas as pd
-
-from app.ingestion.models import (
-    BudgetDocument,
-    ColumnMapping
-)
-
-from app.normalization.budget_normalizer import (
-    BudgetNormalizer
-)
-
+from app.ingestion.models import BudgetDocument, ColumnMapping
+from app.normalization.budget_normalizer import BudgetNormalizer
 
 
 def create_document(data):

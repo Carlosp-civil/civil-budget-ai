@@ -1,6 +1,5 @@
 from app.normalization.text_normalizer import TextNormalizer
 
-
 normalizer = TextNormalizer()
 
 

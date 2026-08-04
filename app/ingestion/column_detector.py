@@ -1,11 +1,6 @@
 from collections import defaultdict
 
-from app.ingestion.models import (
-    ColumnCandidate,
-    ColumnDetectionResult,
-    ColumnMapping
-)
-
+from app.ingestion.models import ColumnCandidate, ColumnDetectionResult, ColumnMapping
 from app.normalization.domain_normalizer import DomainNormalizer
 
 

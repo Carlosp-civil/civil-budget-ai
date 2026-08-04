@@ -1,7 +1,4 @@
-from app.analysis.models import (
-    BudgetItem,
-    NormalizedBudget
-)
+from app.analysis.models import BudgetItem, NormalizedBudget
 
 
 def test_create_budget_item():

@@ -1,11 +1,5 @@
-from app.analysis.models import (
-    BudgetItem,
-    NormalizedBudget
-)
-
-from app.analysis.quality_analyzer import (
-    QualityAnalyzer
-)
+from app.analysis.models import BudgetItem, NormalizedBudget
+from app.analysis.quality_analyzer import QualityAnalyzer
 
 
 def test_detect_missing_quantity():

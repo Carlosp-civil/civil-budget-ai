@@ -1,12 +1,5 @@
-from app.analysis.models import (
-    BudgetItem,
-    NormalizedBudget
-)
-
-from app.ingestion.models import (
-    BudgetDocument,
-    ColumnMapping
-)
+from app.analysis.models import BudgetItem, NormalizedBudget
+from app.ingestion.models import BudgetDocument, ColumnMapping
 
 
 class BudgetNormalizer:

@@ -1,8 +1,4 @@
-from app.analysis.models import (
-    NormalizedBudget,
-    QualityIssue,
-    QualityReport
-)
+from app.analysis.models import NormalizedBudget, QualityIssue, QualityReport
 
 
 class QualityAnalyzer:

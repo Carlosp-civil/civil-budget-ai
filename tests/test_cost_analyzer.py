@@ -1,12 +1,5 @@
-from app.analysis.models import (
-    BudgetItem,
-    NormalizedBudget
-)
-
-from app.analysis.cost_analyzer import (
-    CostAnalyzer
-)
-
+from app.analysis.cost_analyzer import CostAnalyzer
+from app.analysis.models import BudgetItem, NormalizedBudget
 
 
 def test_calculate_item_cost():

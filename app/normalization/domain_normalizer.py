@@ -2,8 +2,8 @@ import json
 from pathlib import Path
 from typing import Dict, List
 
-from app.normalization.text_normalizer import TextNormalizer
 from app.normalization.models import NormalizationMatch
+from app.normalization.text_normalizer import TextNormalizer
 
 
 class DomainNormalizer:

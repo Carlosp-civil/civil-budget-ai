@@ -1,7 +1,4 @@
-from app.analysis.models import (
-    BudgetSummary,
-    CostAnalysisResult
-)
+from app.analysis.models import BudgetSummary, CostAnalysisResult
 
 
 class CostSummaryBuilder:

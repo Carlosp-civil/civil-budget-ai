@@ -1,8 +1,4 @@
-from app.ingestion.models import (
-    ColumnCandidate,
-    ColumnMapping,
-    ColumnDetectionResult
-)
+from app.ingestion.models import ColumnCandidate, ColumnDetectionResult, ColumnMapping
 
 
 def test_column_candidate_creation():

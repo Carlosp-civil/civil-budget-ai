@@ -1,6 +1,5 @@
 from app.normalization.domain_normalizer import DomainNormalizer
 
-
 normalizer = DomainNormalizer(
     "data/knowledge/domain_aliases.json"
 )

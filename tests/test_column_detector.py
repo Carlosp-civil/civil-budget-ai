@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from app.normalization.domain_normalizer import DomainNormalizer
 from app.ingestion.column_detector import ColumnDetector
+from app.normalization.domain_normalizer import DomainNormalizer
 
 
 def test_detect_standard_columns():

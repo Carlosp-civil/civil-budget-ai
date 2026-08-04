@@ -2,11 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from app.ingestion.file_detector import (
-    FileDetector,
-    FileType
-)
-
+from app.ingestion.file_detector import FileDetector, FileType
 from app.ingestion.models import BudgetDocument
 
 

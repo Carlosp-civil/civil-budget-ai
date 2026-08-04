@@ -1,9 +1,4 @@
-from app.analysis.models import (
-    CostAnalysisResult,
-    ItemCost,
-    NormalizedBudget
-)
-
+from app.analysis.models import CostAnalysisResult, ItemCost, NormalizedBudget
 
 
 class CostAnalyzer:

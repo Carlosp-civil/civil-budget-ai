@@ -1,12 +1,5 @@
-from app.analysis.models import (
-    ItemCost,
-    CostAnalysisResult
-)
-
-from app.analysis.cost_summary_builder import (
-    CostSummaryBuilder
-)
-
+from app.analysis.cost_summary_builder import CostSummaryBuilder
+from app.analysis.models import CostAnalysisResult, ItemCost
 
 
 def test_build_budget_summary():

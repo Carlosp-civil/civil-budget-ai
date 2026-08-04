@@ -1,7 +1,6 @@
-import json
 import copy
+import json
 from pathlib import Path
-
 
 DEFAULT_KNOWLEDGE_BASE = {
     "codigo": {
