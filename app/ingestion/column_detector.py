@@ -1,4 +1,7 @@
+from collections import defaultdict
+
 from app.ingestion.models import (
+    ColumnCandidate,
     ColumnDetectionResult,
     ColumnMapping
 )
@@ -20,6 +23,12 @@ class ColumnDetector:
         "precio_unitario"
     ]
 
+    CONFIDENCE_PRIORITY = {
+        "high_confidence": 3,
+        "medium_confidence": 2,
+        "low_confidence": 1,
+    }
+
 
     def __init__(
         self,
@@ -37,9 +46,25 @@ class ColumnDetector:
         un resultado con mapeo y advertencias.
         """
 
-        mapping = ColumnMapping()
+        candidates = self._collect_raw_matches(
+            columns
+        )
 
-        warnings = []
+        return self._resolve_conflicts(
+            candidates
+        )
+
+
+    def _collect_raw_matches(
+        self,
+        columns: list[str]
+    ) -> list[ColumnCandidate]:
+        """
+        Recolecta posibles interpretaciones
+        de las columnas sin tomar decisiones finales.
+        """
+
+        candidates = []
 
 
         for column in columns:
@@ -51,15 +76,88 @@ class ColumnDetector:
                     field
                 )
 
-                if matches:
 
-                    self._assign_match(
-                        mapping,
-                        matches[0].term,
-                        column
+                for match in matches:
+
+                    candidates.append(
+                        ColumnCandidate(
+                            column_name=column,
+                            field=match.term,
+                            confidence=match.confidence,
+                            source="domain_alias"
+                        )
                     )
 
-                    break
+
+        return candidates
+
+
+    def _resolve_conflicts(
+        self,
+        candidates: list[ColumnCandidate]
+    ) -> ColumnDetectionResult:
+        """
+        Resuelve múltiples candidatos para un mismo campo.
+
+        Reglas:
+        1. Mayor nivel de confianza gana.
+        2. Si hay empate, gana la primera aparición.
+        """
+
+        mapping = ColumnMapping()
+
+        warnings = []
+
+
+        grouped_candidates = defaultdict(list)
+
+
+        for candidate in candidates:
+
+            grouped_candidates[
+                candidate.field
+            ].append(
+                candidate
+            )
+
+
+        for field, field_candidates in grouped_candidates.items():
+
+            unique_columns = list(
+                dict.fromkeys(
+                    candidate.column_name
+                    for candidate in field_candidates
+                )
+            )
+
+
+            if len(unique_columns) > 1:
+
+                column_names = ", ".join(
+                    unique_columns
+                )
+
+                warnings.append(
+                    f"Multiple candidates found for field '{field}': {column_names}"
+                )
+
+            winner = max(
+                field_candidates,
+                key=lambda candidate: (
+                    self.CONFIDENCE_PRIORITY.get(
+                        candidate.confidence,
+                        0
+                    ),
+                    -field_candidates.index(candidate)
+                )
+            )
+
+
+            setattr(
+                mapping,
+                field,
+                winner.column_name
+            )
 
 
         return ColumnDetectionResult(

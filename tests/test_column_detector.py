@@ -107,3 +107,55 @@ def test_ignore_unknown_columns():
     assert result.mapping.precio_unitario is None
 
     assert result.warnings == []
+
+from app.normalization.models import NormalizationMatch
+
+
+class FakeDomainNormalizer:
+
+    def normalize(
+        self,
+        value: str,
+        field_type: str
+    ):
+
+        if value == "P.U.":
+
+            return [
+                NormalizationMatch(
+                    term="precio_unitario",
+                    confidence="high_confidence"
+                )
+            ]
+
+        if value == "Precio":
+
+            return [
+                NormalizationMatch(
+                    term="precio_unitario",
+                    confidence="medium_confidence"
+                )
+            ]
+
+        return []
+
+
+
+def test_detect_conflict_uses_highest_confidence():
+
+    detector = ColumnDetector(
+        FakeDomainNormalizer()
+    )
+
+    columns = [
+        "P.U.",
+        "Precio"
+    ]
+
+    result = detector.detect(
+        columns
+    )
+
+    assert result.mapping.precio_unitario == "P.U."
+
+    assert len(result.warnings) == 1
