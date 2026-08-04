@@ -92,3 +92,61 @@ def test_detect_missing_unit():
     assert report.issues[0].issue_type == (
         "missing_unit"
     )
+
+
+
+def test_detect_invalid_quantity():
+
+    budget = NormalizedBudget(
+        source_filename="test_budget.xlsx",
+        items=[
+            BudgetItem(
+                code="001",
+                description="Concrete",
+                unit="m3",
+                quantity=0,
+                unit_price=100
+            )
+        ]
+    )
+
+
+    report = QualityAnalyzer().analyze(
+        budget
+    )
+
+
+    assert len(report.issues) == 1
+
+    assert report.issues[0].issue_type == (
+        "invalid_quantity"
+    )
+
+
+
+def test_detect_invalid_unit_price():
+
+    budget = NormalizedBudget(
+        source_filename="test_budget.xlsx",
+        items=[
+            BudgetItem(
+                code="001",
+                description="Concrete",
+                unit="m3",
+                quantity=10,
+                unit_price=-50
+            )
+        ]
+    )
+
+
+    report = QualityAnalyzer().analyze(
+        budget
+    )
+
+
+    assert len(report.issues) == 1
+
+    assert report.issues[0].issue_type == (
+        "invalid_unit_price"
+    )
