@@ -1,3 +1,4 @@
+import pytest
 from app.ingestion.file_detector import FileDetector, FileType
 
 
@@ -24,12 +25,7 @@ def test_detect_csv_file():
 def test_detect_unsupported_file():
     detector = FileDetector()
 
-    try:
+    with pytest.raises(ValueError):
         detector.detect(
             "presupuesto.txt"
         )
-
-        assert False
-
-    except ValueError:
-        assert True

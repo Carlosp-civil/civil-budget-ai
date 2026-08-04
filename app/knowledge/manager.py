@@ -109,7 +109,6 @@ class KnowledgeManager:
 
             with open(
                 self.storage_path,
-                "r",
                 encoding="utf-8"
             ) as file:
 

@@ -1,4 +1,3 @@
-import pandas as pd
 import pytest
 from app.ingestion.file_detector import FileDetector
 from app.ingestion.file_loader import BudgetLoader

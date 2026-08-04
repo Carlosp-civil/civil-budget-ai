@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from typing import Dict, List
 
 from app.normalization.models import NormalizationMatch
 from app.normalization.text_normalizer import TextNormalizer
@@ -59,9 +58,9 @@ class DomainNormalizer:
         Un alias puede tener múltiples resultados.
         """
 
-        self.alias_map: Dict[
+        self.alias_map: dict[
             str,
-            List[NormalizationMatch]
+            list[NormalizationMatch]
         ] = {}
 
         self.load()
@@ -81,7 +80,6 @@ class DomainNormalizer:
 
         with open(
             self.knowledge_path,
-            "r",
             encoding="utf-8"
         ) as file:
 
@@ -124,7 +122,7 @@ class DomainNormalizer:
         self,
         value: str,
         field_type: str
-    ) -> List[NormalizationMatch]:
+    ) -> list[NormalizationMatch]:
         """
         Busca posibles equivalencias para un valor.
 
@@ -193,8 +191,8 @@ class DomainNormalizer:
 
     def _sort_by_confidence(
         self,
-        matches: List[NormalizationMatch]
-    ) -> List[NormalizationMatch]:
+        matches: list[NormalizationMatch]
+    ) -> list[NormalizationMatch]:
         """
         Ordena las coincidencias desde la mayor
         hasta la menor confianza.
@@ -209,16 +207,17 @@ class DomainNormalizer:
             reverse=True
         )
 
+
     def _select_best_matches(
         self,
-        matches: List[NormalizationMatch],
-    ) -> List[NormalizationMatch]:
+        matches: list[NormalizationMatch],
+    ) -> list[NormalizationMatch]:
         """
         Retorna únicamente la coincidencia con mayor confianza para cada
         término canónico.
         """
 
-        best_matches: Dict[str, NormalizationMatch] = {}
+        best_matches: dict[str, NormalizationMatch] = {}
 
         for match in matches:
             if match.term not in best_matches:

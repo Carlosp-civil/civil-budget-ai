@@ -2,6 +2,7 @@ from pathlib import Path
 
 from app.ingestion.column_detector import ColumnDetector
 from app.normalization.domain_normalizer import DomainNormalizer
+from app.normalization.models import NormalizationMatch
 
 
 def test_detect_standard_columns():
@@ -108,7 +109,6 @@ def test_ignore_unknown_columns():
 
     assert result.warnings == []
 
-from app.normalization.models import NormalizationMatch
 
 
 class FakeDomainNormalizer:

@@ -85,8 +85,8 @@ class BudgetLoader:
 
         except Exception as error:
             raise ValueError(
-                f"No fue posible leer Excel: {error}"
-            )
+                 f"No fue posible leer Excel: {error}"
+            ) from error
 
 
     def _load_csv(
@@ -105,4 +105,4 @@ class BudgetLoader:
         except Exception as error:
             raise ValueError(
                 f"No fue posible leer CSV: {error}"
-            )
+            ) from error
