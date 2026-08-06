@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from app.analysis.cost_analyzer import CostAnalyzer
+from app.analysis.cost_summary_builder import CostSummaryBuilder
 from app.analysis.quality_analyzer import QualityAnalyzer
 from app.application.models import BudgetAnalysisResult
 from app.ingestion.column_detector import ColumnDetector
@@ -19,12 +20,14 @@ class BudgetAnalysisService:
         detector: ColumnDetector,
         normalizer: BudgetNormalizer,
         cost_analyzer: CostAnalyzer,
+        summary_builder: CostSummaryBuilder,
         quality_analyzer: QualityAnalyzer,
     ):
         self.loader = loader
         self.detector = detector
         self.normalizer = normalizer
         self.cost_analyzer = cost_analyzer
+        self.summary_builder = summary_builder
         self.quality_analyzer = quality_analyzer
 
     def analyze(
@@ -40,10 +43,14 @@ class BudgetAnalysisService:
 
         cost = self.cost_analyzer.analyze(budget)
 
+        summary = self.summary_builder.build(cost)
+
         quality = self.quality_analyzer.analyze(budget)
 
         return BudgetAnalysisResult(
             columns=columns,
+            normalized_budget=budget,
             cost_analysis=cost,
+            summary=summary,
             quality_report=quality,
         )

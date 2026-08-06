@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 
 from app.analysis.models import (
+    BudgetSummary,
     CostAnalysisResult,
+    NormalizedBudget,
     QualityReport,
 )
 from app.ingestion.models import ColumnDetectionResult
@@ -14,5 +16,7 @@ class BudgetAnalysisResult:
     """
 
     columns: ColumnDetectionResult
+    normalized_budget: NormalizedBudget
     cost_analysis: CostAnalysisResult
+    summary: BudgetSummary
     quality_report: QualityReport

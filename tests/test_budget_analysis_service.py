@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 from app.analysis.cost_analyzer import CostAnalyzer
+from app.analysis.cost_summary_builder import CostSummaryBuilder
 from app.analysis.quality_analyzer import QualityAnalyzer
 from app.application.budget_analysis_service import BudgetAnalysisService
 from app.ingestion.column_detector import ColumnDetector
@@ -37,6 +38,7 @@ def test_budget_analysis_service(tmp_path):
         detector=detector,
         normalizer=BudgetNormalizer(),
         cost_analyzer=CostAnalyzer(),
+        summary_builder=CostSummaryBuilder(),
         quality_analyzer=QualityAnalyzer(),
     )
 
@@ -55,3 +57,11 @@ def test_budget_analysis_service(tmp_path):
     assert len(result.quality_report.issues) == 0
 
     assert result.columns.mapping.codigo == "codigo"
+
+    assert result.summary.total_cost == 2500
+
+    assert result.summary.total_items == 1
+
+    assert result.summary.calculated_items == 1
+
+    assert len(result.normalized_budget.items) == 1
