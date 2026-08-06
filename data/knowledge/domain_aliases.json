@@ -22,6 +22,7 @@
 
     "precio_unitario": {
         "high_confidence": [
+            "precio_unitario",
             "precio unitario",
             "valor unitario",
             "p.u."
