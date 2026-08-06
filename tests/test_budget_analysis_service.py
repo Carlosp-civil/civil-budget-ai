@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
+from app.analysis.analysis_engine import AnalysisEngine
 from app.analysis.cost_analyzer import CostAnalyzer
 from app.analysis.cost_summary_builder import CostSummaryBuilder
 from app.analysis.quality_analyzer import QualityAnalyzer
@@ -33,13 +34,17 @@ def test_budget_analysis_service(tmp_path):
         DomainNormalizer(Path("data/knowledge/domain_aliases.json"))
     )
 
+    engine = AnalysisEngine(
+        cost_analyzer=CostAnalyzer(),
+        quality_analyzer=QualityAnalyzer(),
+        summary_builder=CostSummaryBuilder(),
+    )
+
     service = BudgetAnalysisService(
         loader=loader,
         detector=detector,
         normalizer=BudgetNormalizer(),
-        cost_analyzer=CostAnalyzer(),
-        summary_builder=CostSummaryBuilder(),
-        quality_analyzer=QualityAnalyzer(),
+        engine=engine,
     )
 
     document = loader.load(csv_file)

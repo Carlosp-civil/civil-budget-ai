@@ -1,8 +1,6 @@
 from pathlib import Path
 
-from app.analysis.cost_analyzer import CostAnalyzer
-from app.analysis.cost_summary_builder import CostSummaryBuilder
-from app.analysis.quality_analyzer import QualityAnalyzer
+from app.analysis.analysis_engine import AnalysisEngine
 from app.application.models import BudgetAnalysisResult
 from app.ingestion.column_detector import ColumnDetector
 from app.ingestion.file_loader import BudgetLoader
@@ -11,7 +9,7 @@ from app.normalization.budget_normalizer import BudgetNormalizer
 
 class BudgetAnalysisService:
     """
-    Orquesta todo el proceso de análisis.
+    Orquesta el flujo completo de análisis.
     """
 
     def __init__(
@@ -19,16 +17,12 @@ class BudgetAnalysisService:
         loader: BudgetLoader,
         detector: ColumnDetector,
         normalizer: BudgetNormalizer,
-        cost_analyzer: CostAnalyzer,
-        summary_builder: CostSummaryBuilder,
-        quality_analyzer: QualityAnalyzer,
+        engine: AnalysisEngine,
     ):
         self.loader = loader
         self.detector = detector
         self.normalizer = normalizer
-        self.cost_analyzer = cost_analyzer
-        self.summary_builder = summary_builder
-        self.quality_analyzer = quality_analyzer
+        self.engine = engine
 
     def analyze(
         self,
@@ -39,13 +33,16 @@ class BudgetAnalysisService:
 
         columns = self.detector.detect(document.columns)
 
-        budget = self.normalizer.normalize(document, columns.mapping)
+        budget = self.normalizer.normalize(
+            document,
+            columns.mapping,
+        )
 
-        cost = self.cost_analyzer.analyze(budget)
-
-        summary = self.summary_builder.build(cost)
-
-        quality = self.quality_analyzer.analyze(budget)
+        (
+            cost,
+            summary,
+            quality,
+        ) = self.engine.analyze(budget)
 
         return BudgetAnalysisResult(
             columns=columns,
